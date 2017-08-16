@@ -30,17 +30,7 @@ function main() {
     echoIsNumber({a:1});
     echoIsNumber(()=>{});
     echoIsNumber(function(){});
-    echoIsNumber(main);}
-main();
+    echoIsNumber(main);
+}
 
-// undefined 'is' 'undefined'
-// 1 'is' 'number'
-// 0 'is' 'number'
-// -1 'is' 'number'
-// a is string
-//  is string
-// null 'is' 'object'
-// [] 'is' 'object'
-// {} 'is' 'object'
-// [Function] 'is' 'function'
-// [Function] 'is' 'function'
+main();
