@@ -20,14 +20,14 @@ bable -w js_modan -d js
 
 ### 3. develop
 
-editing js_modan directory.
-auto compile to js direcory.
+editing js_modan directory.  
+auto compile to js direcory.  
 
-## usage if you want import
+## usage if you want require command for front
 
-bable is not suport imort front, so use browserify.
-this sample compile automaticaly.
-with npm packages path, fs-extra, babelify, vinyl-source-stream.
+bable is not suport require command for front, so use browserify.  
+this sample compile automaticaly.  
+with npm packages path, fs-extra, babelify, vinyl-source-stream.  
 
 ### 1. insall
 
@@ -37,9 +37,9 @@ npm i -D gulp path fs-extra browserify babelify vinly-sourcestream
 
 ### 2. easy use
 
-only need file use require command.
-[take care] browserify is not covert ms6.
-after convert bable convert.
+only need file use require command.  
+[take care] browserify is not covert ms6.  
+after convert bable convert.  
 
 ```
 browserify js_modan/ms6.js -o js/ms6.js
