@@ -25,8 +25,8 @@ auto compile to js direcory.
 
 ## usage if you want import
 
-bable is not suport imort front, so use browserify.
-this sample compile automaticaly.
+bable is not suport imort front, so use browserify.　　
+this sample compile automaticaly.　　
 with npm packages path, fs-extra, babelify, vinyl-source-stream.
 
 ### 1. insall
