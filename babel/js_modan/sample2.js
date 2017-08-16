@@ -1,4 +1,6 @@
+import * as _ from "./sample";
+
 let helloWorld = () => {
-    logging("hello world !! sample2.js");
+    _.logging("hello world !! sample2.js");
 };
 helloWorld();
