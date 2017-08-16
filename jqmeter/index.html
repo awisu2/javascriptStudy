@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+  <meta charset="utf-8">
+  <title>JavaScript Samples</title>
+<!--  <link rel="stylesheet" href="style.css">-->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="jqmeter.min.js"></script>
+</head>
+<body>
+
+<h1>Javascript Samples</h1>
+
+<h2>jQMeter</h2>
+<a href="http://www.gerardolarios.com/plugins-and-tools/jqmeter/">http://www.gerardolarios.com/plugins-and-tools/jqmeter/</a><br>
+
+<div id="jqmeter-container"></div>
+<div id="jqmeter-container2"></div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#jqmeter-container').jQMeter({
+        goal:'$1,000',
+        raised:'$800',
+        orientation:'horizontal',
+        width:'50px',
+        height:'200px'
+    });
+    $('#jqmeter-container2').jQMeter({
+        goal:'$1,000',
+        raised:'$240',
+        orientation:'vertical',
+        width:'100px',
+        height:'100px',
+        barColor:"#66F",
+    });
+
+});
+</script>
+
+
+<h2>other</h2>
+<a href="http://www.sitepoint.com/a-minimal-html-document-html5-edition/">http://www.sitepoint.com/a-minimal-html-document-html5-edition/</a><br />
+<a href="http://jquery.com/">http://jquery.com/</a><br />
+
+</body>
+</html>
