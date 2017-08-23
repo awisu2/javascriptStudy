@@ -63,7 +63,9 @@ $("#login-button").click(function(event){
     });
 });
 
-function checkLogin() {     
+let tmp = {};
+
+function checkLogin() {
     var data = {
         UserPoolId: USER_POOL_ID,
         ClientId  : CLIENT_ID,
@@ -73,16 +75,22 @@ function checkLogin() {
 
     if (cognitoUser != null) {
         cognitoUser.getSession(function(err, sessresult) {
+            if(err) {
+                console.log(err);
+                return;
+            }
+
             if (sessresult) {
                 console.log('You are now logged in.', sessresult);
+                tmp.session = sessresult;
                 cognitoUser.getUserAttributes(function(err, attrresult) {
                     if (err) {
                         alert(err);
                         return;
                     }
                     // TODO:getuser Info & setting other
-                    console.log(cognitoUser);
-                    console.log(attrresult);
+                    console.log("user", cognitoUser);
+                    console.log("user_parameters", attrresult);
                     $("#username").html("Username: " + cognitoUser.username);
                     for (i = 0; i < attrresult.length; i++) {
                         if (attrresult[i].getName()=="email"){
@@ -99,13 +107,35 @@ function checkLogin() {
                     });
                 });
             } else {
-               var url = "login.html";
-               $(location).attr("href", url);
+                let file_name = window.location.href.split('/').pop();
+
+                console.log("a2", file_name);
+               // var url = "login.html";
+               // $(location).attr("href", url);
             }
         });
     } else {
-      var url = "login.html";
-      $(location).attr("href", url);
+        let file_name = window.location.href.split('/').pop();
+        console.log("a1", file_name);
+      // var url = "login.html";
+      // $(location).attr("href", url);
     }
 }
 checkLogin();
+
+$("#callHello").on("click", function(e) {
+    let url = CALL_URL;
+    $.ajax({
+        type: "POST",
+        url: url,
+        headers: {
+            Authorization: tmp.session.getIdToken().getJwtToken()
+        }
+    })
+    .done(function(res){
+        console.log(res);
+    });
+
+
+});
+
