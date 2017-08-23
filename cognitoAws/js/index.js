@@ -1,141 +1,69 @@
-// auth
-AWS.config.region = REGION; // Region
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: IDENTITY_POOL_ID,
-});
+cognito.init(REGION, IDENTITY_POOL_ID, USER_POOL_ID, CLIENT_ID);
 
-// Initialize the Amazon Cognito credentials provider
-AWSCognito.config.region = REGION; // Region
-AWSCognito.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: IDENTITY_POOL_ID
+var userData = {};
+cognito.checkLogin(true, function(err, data){
+    if(err) {
+        console.log(err);
+        return;
+    }
+    if(Object.keys(data).length == 0) {
+        console.log("no loging");
+    }
+    userData = data;
 });
 
 $("#login-button").click(function(event){ 
     event.preventDefault();
 
-    let userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool({
-        UserPoolId : USER_POOL_ID,
-        ClientId   : CLIENT_ID,
-        Paranoia   : 7
-    });
+    let name = $('#name').val();
+    let password = $('#password').val();
 
-    let cognitoUser = new AWSCognito.CognitoIdentityServiceProvider.CognitoUser({
-        Username : $('#name').val(),
-        Pool     : userPool
-    });
-
-    var authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails({
-        Username : $('#name').val(),
-        Password : $('#password').val()
-    });
-    cognitoUser.authenticateUser(authenticationDetails, {
-        onSuccess: function (authresult) {
-            //console.log('access token + ' + authresult.getIdToken().getJwtToken());
-             
+    let cognitoUser = cognito.cognitoUser(name);
+    let callback = {
+        onSuccess: function(result) {
              var url = "mypage.html";
- 
+
              $('form').fadeOut(700, function(){
                 $(location).attr("href", url);
              });
              $('.wrapper').addClass('form-success'); 
-             
         },
         onFailure: function(err) {
             alert(err.message);
         },
-        // まだpasswordが確定していない
         newPasswordRequired: function(userAttributes, requiredAttributes) {
-            // User was signed up by an admin and must provide new
-            // password and required attributes, if any, to complete
-            // authentication.
-
-            console.log(userAttributes);
+            // TODO: goto new password setting page;
+            console.log("dd", userAttributes, requiredAttributes);
             // the api doesn't accept this field back
             delete userAttributes.email_verified;
 
-            // TODO:多分あんまりよくない
+            // 必要なフィールドは、requiredAttributesにセットされる
             userAttributes.name = "foo";
             userAttributes.email = "a@b.com";
 
+            // TODO: new password
+            password = password;
+
             // Get these details and call
-            cognitoUser.completeNewPasswordChallenge("12345678", userAttributes, this);
-        }        
-    });
+            cognito.completeNewPasswordChallenge(cognitoUser, password, userAttributes, callback);
+        },
+    };
+    cognito.authenticateUser(cognitoUser, name, password, callback);
 });
 
-let tmp = {};
+$("#callHello").on("click", function(event) {
+    event.preventDefault();
 
-function checkLogin() {
-    var data = {
-        UserPoolId: USER_POOL_ID,
-        ClientId  : CLIENT_ID,
-    };
-    var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(data);
-    var cognitoUser = userPool.getCurrentUser();
-
-    if (cognitoUser != null) {
-        cognitoUser.getSession(function(err, sessresult) {
-            if(err) {
-                console.log(err);
-                return;
-            }
-
-            if (sessresult) {
-                console.log('You are now logged in.', sessresult);
-                tmp.session = sessresult;
-                cognitoUser.getUserAttributes(function(err, attrresult) {
-                    if (err) {
-                        alert(err);
-                        return;
-                    }
-                    // TODO:getuser Info & setting other
-                    console.log("user", cognitoUser);
-                    console.log("user_parameters", attrresult);
-                    $("#username").html("Username: " + cognitoUser.username);
-                    for (i = 0; i < attrresult.length; i++) {
-                        if (attrresult[i].getName()=="email"){
-                          $("#email").html("EMail: " + attrresult[i].getValue());
-                        }
-                    }
-
-                    // Add the User's Id Token to the Cognito credentials login map.
-                    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: IDENTITY_POOL_ID,
-                        Logins: {
-                            POOL_ARN: sessresult.getIdToken().getJwtToken()
-                        }
-                    });
-                });
-            } else {
-                let file_name = window.location.href.split('/').pop();
-
-                console.log("a2", file_name);
-               // var url = "login.html";
-               // $(location).attr("href", url);
-            }
-        });
-    } else {
-        let file_name = window.location.href.split('/').pop();
-        console.log("a1", file_name);
-      // var url = "login.html";
-      // $(location).attr("href", url);
-    }
-}
-checkLogin();
-
-$("#callHello").on("click", function(e) {
-    let url = CALL_URL;
     $.ajax({
         type: "POST",
-        url: url,
+        url: CALL_URL,
         headers: {
-            Authorization: tmp.session.getIdToken().getJwtToken()
+            Authorization: userData.session.getIdToken().getJwtToken()
         }
-    })
-    .done(function(res){
-        console.log(res);
+    }).done(function(res){
+        console.log("res", res);
+    }).fail(function(event, error, message){
+        console.log(event, error, message);
     });
-
-
 });
 
