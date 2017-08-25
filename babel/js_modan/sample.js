@@ -3,5 +3,3 @@ let logging = (text = "---")=>{
     if(html) html = html + "<br>";
     $("#log").html(html + text.replace(/\n/g, "<br>"));
 };
-
-exports.logging = logging;
