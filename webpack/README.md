@@ -10,8 +10,7 @@ https://webpack.github.io/docs/configuration.html
 
 ```webpack.config.js
 {
-  context: __dirname + "/src",
-  entry: "./entry",
+  entry: "./src",
   output: {
     path: __dirname + "/dist",
     filename: "bundle.js"
@@ -27,8 +26,8 @@ https://webpack.github.io/docs/configuration.html
 ```
 
 ```
-mkdir -p src/entry
-touch src/entry/index.js
+mkdir -p src
+touch src/index.js
 npm run build
 ```
 
@@ -57,7 +56,7 @@ webpack use xxx-loader plugin
 }
 ```
 
-```app/entry/index.js
+```src/index.js
 let hello = (name) => {
   return `hello ${name}`
 }
@@ -101,5 +100,78 @@ https://github.com/webpack/webpack/blob/master/.gitignore
 add
 ```
 dist/
+```
+
+## add rule images
+```webpack.config.js
+  ...,
+  module: {
+    rules: [
+      ...,
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'url-loader'
+      }
+    ]
+  }
+```
+
+```
+mkdir -p src/assets
+```
+
+add any images ander assets folder name 'sample.jpg'
+
+```src/index.js
+...,
+import sampleImage from './assets/sample.jpg'
+console.log('body', document.body)
+let img = document.createElement('img')
+img.src = sampleImage
+document.body.appendChild(img)
+```
+
+install plugin and build
+
+```
+npm -D install url-loader
+npm run build
+```
+
+## sepalete images to file
+https://github.com/webpack-contrib/file-loader
+
+add publicPath, change iamges loader to file-loader
+
+```webpack.config.js
+module.exports = {
+  entry: "./src",
+  output: {
+    path: __dirname + "/dist",
+    filename: "bundle.js",
+    publicPath: 'dist/'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader'
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          outputPath: 'assets/',
+        }
+      }
+    ]
+  }
+};
+```
+
+```
+npm -D install file-loader
+npm run build
 ```
 

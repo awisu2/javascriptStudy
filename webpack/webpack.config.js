@@ -1,9 +1,9 @@
 module.exports = {
-  context: __dirname + "/src",
-  entry: "./entry",
+  entry: "./src",
   output: {
     path: __dirname + "/dist",
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: 'dist/'
   },
   module: {
     rules: [
@@ -11,6 +11,14 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader'
       },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',
+          outputPath: 'assets/',
+        }
+      }
     ]
   }
 };
