@@ -59,8 +59,13 @@ $("#callHello").on("click", function(event) {
         url: CALL_URL,
         headers: {
             Authorization: userData.session.getIdToken().getJwtToken()
+        },
+        data: {
+            a: 123,
         }
+
     }).done(function(res){
+        $("#log").text(JSON.stringify(res));
         console.log("res", res);
     }).fail(function(event, error, message){
         console.log(event, error, message);

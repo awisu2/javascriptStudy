@@ -31,4 +31,3 @@ kvs.set('Daisy', "Hostess");
 console.log(kvs.get('Daisy'));
 kvs.delete('Daisy');
 console.log(kvs.get('Daisy'));
-

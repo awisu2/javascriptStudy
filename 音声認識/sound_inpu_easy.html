@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>sound input</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script language="javascript">
+	<!--
+		var recognition = new webkitSpeechRecognition();
+		recognition.onresult = function(event) { 
+		  console.log(event) 
+		}
+		recognition.start();
+	// 未対応ブラウザ対策おしまいでござる  -->
+	</script>
+</head>
+<body>
+
+
+<input type="button" value="音声認識開始" onclick="recognition.start();"/>
+<input type="button" value="音声認識終了" onclick="recognition.stop();"/>
+<div id="state">停止中</div>
+<div id="recognizedText"></div>
+
+
+</body>
+</html>

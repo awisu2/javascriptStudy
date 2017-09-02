@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>sound input</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script language="javascript">
+	<!--
+		var recognition = new webkitSpeechRecognition();
+		recognition.lang = "ja-JP";
+
+		//話し声の認識中
+		recognition.onsoundstart = function(){
+alert("start");
+		    $("#state").text("認識中");
+		};
+
+		//マッチする認識が無い
+		recognition.onnomatch = function(){
+alert("nomatch");
+		    $("#recognizedText").text("もう一度試してください");
+		};
+
+		//エラー
+		recognition.onerror= function(){
+alert("error");
+		    $("#recognizedText").text("エラー");
+		};
+
+		//話し声の認識終了
+		recognition.onsoundend = function(){
+		    $("#state").text("停止中");
+		};
+
+		//認識が終了したときのイベント
+		recognition.onresult = function(event){
+		    var results = event.results;
+		    for (var i = event.resultIndex; i<results.length; i++){
+		        $("#recognizedText").text(results[i][0].transcript);
+			}
+		};
+
+alert("a");
+	// 未対応ブラウザ対策おしまいでござる  -->
+	</script>
+</head>
+<body>
+
+
+<input type="button" value="音声認識開始" onclick="recognition.start();"/>
+<input type="button" value="音声認識終了" onclick="recognition.stop();"/>
+<div id="state">停止中</div>
+<div id="recognizedText"></div>
+
+
+</body>
+</html>
