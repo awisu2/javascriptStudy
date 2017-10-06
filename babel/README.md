@@ -6,15 +6,21 @@ babel study
 
 ### 1. install
 
-```
+```shell
 npm i -g babel-cli
-npm i -D babel-preset-es2015
+npm i -D babel-preset-env
+```
+
+**.bberlrc**
+
+```
+{ "presets": ["env"] }
 ```
 
 ### 2. auto compile
 
-```
-cd <directory>
+```shell
+cd ${directory}
 bable -w js_modan -d js
 ```
 
@@ -31,7 +37,7 @@ with npm packages path, fs-extra, babelify, vinyl-source-stream.<br>
 
 ### 1. insall
 
-```
+```shell
 npm i -D gulp path fs-extra browserify babelify vinly-sourcestream
 ```
 
@@ -41,7 +47,7 @@ only need file use require command.<br>
 [take care] browserify is not covert ms6.<br>
 after convert bable convert.<br>
 
-```
+```shell
 browserify js_modan/ms6.js -o js/ms6.js
 ```
 
@@ -66,12 +72,30 @@ bable js_modan/sample.js -o js/sample.js
 
 #### directory
 
-```
+```shell
 babel js_modan -d js
 ```
 
 #### auto compile
 
+```shell
+babel -w js_modan -d js
 ```
-bable -w js_modan -d js
+
+### easy commands
+
+```
+npm i -D babel-cli babel-preset-env
+echo '{ "presets": ["env"] }' > .babelrc
+mkdir src
+cat << EOF >> src/index.js
+const Test = class {
+  static hello() {
+    return 'hello world'
+  }
+}
+console.log(Test.hello())
+EOF
+babel src -d dist
+node dist/index.js
 ```
