@@ -1,5 +1,5 @@
-import * as _ from "../sample";
+// import * as _ from "../sample";
 
-var nestfunctoin = function nestfunctoin() {
-    _.logging("hello nest function!! sample3.js");
-};
+// var nestfunctoin = function nestfunctoin() {
+//     _.logging("hello nest function!! sample3.js");
+// };

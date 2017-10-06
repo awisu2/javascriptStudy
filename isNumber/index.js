@@ -1,6 +1,6 @@
 function isNumber(v){
     let type = typeof(v);
-    if (type != "number" && type != "string") return true;
+    if (type != "number" && type != "string") return false;
     return v == parseFloat(v) && isFinite(v);
 }
 

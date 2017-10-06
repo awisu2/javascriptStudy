@@ -31,6 +31,10 @@ function convert(_path, name, dir){
     browserify(_path)
         .transform("babelify", {presets: ["es2015"]})
         .bundle()
+        .on("error", function (err) {
+            console.log("Error : " + err.message);
+            this.emit("end");
+        })
         .pipe(source(name))
         .pipe(gulp.dest(dir));
 }
