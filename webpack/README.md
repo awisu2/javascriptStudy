@@ -8,7 +8,9 @@ node ./node_modules/webpack/bin/webpack.js --help
 
 https://webpack.github.io/docs/configuration.html
 
-```webpack.config.js
+**webpack.config.js**
+
+```javascript
 {
   entry: "./src",
   output: {
@@ -18,14 +20,16 @@ https://webpack.github.io/docs/configuration.html
 }
 ```
 
-```package.json
+**package.json**
+
+```json
   scripts : {
     ...
     "build": "webpack"
   }
 ```
 
-```
+```shell
 mkdir -p src
 touch src/index.js
 npm run build
@@ -37,7 +41,9 @@ maked dist/bundle.js(empty function)
 
 webpack use xxx-loader plugin
 
-```webpack.config.js
+**webpack.config.js**
+
+```javascript
 {
   context: __dirname + "/src",
   entry: "./entry",
@@ -56,7 +62,9 @@ webpack use xxx-loader plugin
 }
 ```
 
-```src/index.js
+**src/index.js**
+
+```javascript
 let hello = (name) => {
   return `hello ${name}`
 }
@@ -65,12 +73,16 @@ alert(hello('webpack'))
 ```
 
 ### babel setting
-```.babelrc
+
+.babelrc
+
+```json
 { "presets": ["env"] }
 ```
 
 ### install plugin and build
-```
+
+```shell
 npm i -D babel-loader babel-core babel-preset-env
 npm run build
 ```
@@ -79,7 +91,9 @@ check dist/bundle.js(empty function)
 
 ### user bundle.js
 
-```index.html
+**index.html**
+
+```html
 <!doctype html>
 <html>
 <head>
@@ -98,12 +112,15 @@ base .gitignore
 https://github.com/webpack/webpack/blob/master/.gitignore
 
 add
+
 ```
 dist/
 ```
 
 ## add rule images
-```webpack.config.js
+**webpack.config.js**
+
+```javascript
   ...,
   module: {
     rules: [
@@ -116,13 +133,15 @@ dist/
   }
 ```
 
-```
+```shell
 mkdir -p src/assets
 ```
 
 add any images ander assets folder name 'sample.jpg'
 
-```src/index.js
+**src/index.js**
+
+```javascript
 ...,
 import sampleImage from './assets/sample.jpg'
 console.log('body', document.body)
@@ -133,7 +152,7 @@ document.body.appendChild(img)
 
 install plugin and build
 
-```
+```shell
 npm -D install url-loader
 npm run build
 ```
@@ -143,7 +162,9 @@ https://github.com/webpack-contrib/file-loader
 
 add publicPath, change iamges loader to file-loader
 
-```webpack.config.js
+**webpack.config.js**
+
+```javascript
 module.exports = {
   entry: "./src",
   output: {
@@ -178,7 +199,7 @@ npm run build
 ## add rule scss
 https://github.com/webpack-contrib/sass-loader
 
-```
+```javascript
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -219,7 +240,9 @@ module.exports = {
 };
 ```
 
-```index.js
+**index.js**
+
+```javascript
 ...
 import './css/style.scss'
 import './css/style2.scss'
@@ -229,6 +252,6 @@ style.href = "dist/css/bundle.css"
 document.head.appendChild(style)
 ```
 
-```
+```shell
 npm install -D style-loader css-loader sass-loader node-sass extract-text-webpack-plugin
 ```
