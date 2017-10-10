@@ -84,7 +84,7 @@ babel -w js_modan -d js
 
 ### easy commands
 
-```
+```shell
 npm i -D babel-cli babel-preset-env
 echo '{ "presets": ["env"] }' > .babelrc
 mkdir src
@@ -98,4 +98,32 @@ console.log(Test.hello())
 EOF
 babel src -d dist
 node dist/index.js
+```
+
+
+#### add dev command
+
+```bash
+npm i -D fs
+```
+
+```bash
+node << EOF
+let fs = require('fs')
+let fileName = 'package.json'
+
+let f = fs.readFileSync(fileName, 'utf8')
+let config = JSON.parse(f)
+config.scripts = config.scripts ? config.scripts : {}
+let scripts = {
+  build : 'babel src -d dist',
+  dev : 'npm run build -- -w'
+}
+for(let key in scripts) {
+  config.scripts[key] = scripts[key]
+}
+let _config = JSON.stringify(config, null, 2)
+
+fs.writeFileSync(fileName, _config)
+EOF
 ```
