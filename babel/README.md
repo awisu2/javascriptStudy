@@ -104,12 +104,12 @@ node dist/index.js
 #### add dev command
 
 ```bash
-npm i -D fs
+npm i -D fs-extra
 ```
 
 ```bash
 node << EOF
-let fs = require('fs')
+let fs = require('fs-extra')
 let fileName = 'package.json'
 
 let f = fs.readFileSync(fileName, 'utf8')
